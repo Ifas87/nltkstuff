@@ -1,2 +1,4 @@
 pycache
 nlpstuff
+.gitignore
+test.ft.txt
