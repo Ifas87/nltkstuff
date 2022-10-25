@@ -12,7 +12,10 @@ def main():
     #print(data_sample['airline_sentiment'])
 
     relevant_sample = data_sample[ ['text', 'airline_sentiment'] ]
-    print(relevant_sample.head())
+    #print(relevant_sample.head())
+    #print(relevant_sample["airline_sentiment"].value_counts())
+
+
 
 
 if __name__ == '__main__':
