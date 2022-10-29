@@ -4,7 +4,6 @@ import nltk
 import numpy
 import string
 import tensorflow
-import tensorflow_text as tf
 
 from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.layers import LSTM,Dense, Dropout, SpatialDropout1D
@@ -30,7 +29,16 @@ def main():
     encoded_result = tokenisers.texts_to_sequences(nptext)
     padded_result = tensorflow.keras.preprocessing.sequence.pad_sequences(encoded_result, maxlen=200)
 
+    len_vocab = len(tokenisers.word_index) + 1
 
+    embedding_vector_length = 32
+    model = Sequential()
+    model.add(Embedding(len_vocab, embedding_vector_length, input_length=200))
+    model.add(SpatialDropout1D(0.25))
+    model.add(LSTM(50, dropout=0.5, recurrent_dropout=0.5))
+    model.add(Dropout(0.2))
+    model.add(Dense(1, activation='sigmoid'))
+    model.compile(loss='binary_crossentropy',optimizer='adam', metrics=['accuracy'])
 
 if __name__ == '__main__':
     main()
