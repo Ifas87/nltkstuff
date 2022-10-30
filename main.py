@@ -1,13 +1,12 @@
 import pandas as pd
-import matplotlib as plt
-import nltk
-import numpy
-import string
 import tensorflow
+import matplotlib.pyplot as plt
+
 
 from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.layers import LSTM,Dense, Dropout, SpatialDropout1D
 from tensorflow.python.keras.layers import Embedding
+
 
 def main():
     data_sample = pd.read_csv('Tweets.csv')
@@ -22,6 +21,7 @@ def main():
     relevant_sample = relevant_sample[relevant_sample['airline_sentiment'] != "neutral"]
     # print(relevant_sample["airline_sentiment"].value_counts())
     # print(relevant_sample["airline_sentiment"].factorize())
+    sentiment_label = relevant_sample['airline_sentiment'].factorize()
     nptext = relevant_sample['text'].values
     tokenisers = tensorflow.keras.preprocessing.text.Tokenizer(num_words=5000)
     tokenisers.fit_on_texts(nptext)
@@ -39,6 +39,14 @@ def main():
     model.add(Dropout(0.2))
     model.add(Dense(1, activation='sigmoid'))
     model.compile(loss='binary_crossentropy',optimizer='adam', metrics=['accuracy'])
+
+    history = model.fit(padded_result, sentiment_label[0], validation_split=0.2, epochs=5, batch_size=32)
+
+    plt.plot(history.history['accuracy'], label='acc')
+    plt.plot(history.history['val_accuracy'], label='val_acc')
+    plt.legend()
+    plt.show()
+
 
 if __name__ == '__main__':
     main()
