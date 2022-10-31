@@ -42,10 +42,22 @@ def main():
 
     history = model.fit(padded_result, sentiment_label[0], validation_split=0.2, epochs=5, batch_size=32)
 
+    
     plt.plot(history.history['accuracy'], label='acc')
     plt.plot(history.history['val_accuracy'], label='val_acc')
     plt.legend()
     plt.show()
+
+    plt.savefig("Accuracy plot.jpg")
+
+    plt.plot(history.history['loss'], label='loss')
+    plt.plot(history.history['val_loss'], label='val_loss')
+    plt.legend()
+    plt.show()
+    
+    plt.savefig("Loss plt.jpg")
+
+
 
 
 if __name__ == '__main__':
