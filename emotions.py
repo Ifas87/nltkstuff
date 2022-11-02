@@ -1,5 +1,6 @@
 from nrclex import NRCLex
 import pandas as pd
+import matplotlib.pyplot as plt
 
 
 def main():
@@ -8,7 +9,13 @@ def main():
     
     text_stuff = NRCLex(bigString)
     results = text_stuff.raw_emotion_scores
-    print(results)
+    
+    labels = list(results.keys())
+    data = list(results.values())
+
+    
+    plt.bar(range(len(results)), data, tick_label=labels)
+    plt.show()
 
 
 if __name__ == '__main__':
