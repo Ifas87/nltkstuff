@@ -13,7 +13,8 @@ def main():
     labels = list(results.keys())
     data = list(results.values())
 
-    
+    # fig,ax=plt.subplots(1,1,dpi=135)
+    plt.figure(figsize=(10, 3))
     plt.bar(range(len(results)), data, tick_label=labels)
     plt.show()
 
